@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block scr %}
+    <link rel="stylesheet" type="text/css" href="static/css/register.css">
+
+{% endblock %}
+{% block nav %}
+ <button class="reg_button" onclick="go_to_href('age')">Войти</button>
+ <button class="reg_button" onclick="go_to_href('register')">Создать аккаунт</button>
+
+{% endblock %}
+{% block content %}
+<div class="form">
+    <h1>Присоединиться к классу</h1>
+
+
+    <div id = "student_form" >
+     <form action="" method="post" id="student" name="student">
+        {{ form.hidden_tag() }}
+         <p>
+            {{ form.login.label }}<br>
+            {{ form.login(class="form-control", type="login") }}<br>
+            {% for error in form.login.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+         <p>
+            {{ form.code_class.label }}<br>
+            {{ form.code_class(class="form-control", type="code_class") }}<br>
+            {% for error in form.code_class.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+
+        <p>
+            {{ form.name.label }}<br>
+            {{ form.name(class="form-control", type="name" ) }}<br>
+            {% for error in form.name.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+
+        <p>
+            {{ form.surname.label }}<br>
+            {{ form.surname(class="form-control", type="surname") }}<br>
+            {% for error in form.surname.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+        <div>{{ message }}</div>
+    </form>
+        </div>
+
+
+     </div>
+
+</div>
+
+{% endblock %}

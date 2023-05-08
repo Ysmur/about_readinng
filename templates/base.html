@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for( 'static', filename='images/reading-book.png')}}" sizes="16x16" type="image/png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="static/css/base.css">
+    <link rel="stylesheet" type="text/css" href="static/css/{{ css_file_name }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="static/js/base.js"></script>
+    {% block scr %}
+
+    {% endblock %}
+    <title>About reading</title>
+</head>
+<body>
+<header>
+    <nav class="heading">
+        <a id="header_title">MyRead</a>
+        {% if student %}
+        <button class="reg_button" onclick="go_to_href('my_training')">Тренинг</button>
+        {% endif %}
+        {% if teacher %}
+        <button class="reg_button" onclick="go_to_href('my_classes')">Мои классы</button>
+        {% endif %}
+        {% if parent %}
+        <button class="reg_button" onclick="go_to_href('my_children')">Мои дети</button>
+        {% endif %}
+        {% if is_registered %}
+            <button class="reg_button" onclick="go_to_href('profile')">Профиль</button>
+            <button class="reg_button" onclick="go_to_href('logout')">Выйти</button>
+        {% else %}
+         {% block nav %}
+            <button class="reg_button" onclick="go_to_href('age')">Войти</button>
+            <button class="reg_button" onclick="go_to_href('register')">Создать аккаунт</button>
+        {% endblock %}
+        {% endif %}
+
+
+    </nav>
+<div class="space"></div>
+</header>
+<main>
+
+    {% block content %} {% endblock %}
+</main>
+</body>
+</html>

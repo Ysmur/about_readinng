@@ -1,0 +1,105 @@
+
+:root {
+    --viewport-height: 100dvh;
+    --web-ui_button-border-radius: 16px;
+    --color-snow: 19,31,36;
+    --color-snow-always-light: 255,255,255;
+    --color-snow-always-dark: 19,31,36;
+    --color-black-text: 60,60,60;
+    }
+html {
+    overflow-scrolling: touch;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    touch-action: manipulation
+}
+
+@media (min-width: 700px) {
+    html {
+        overflow-scrolling:auto
+    }
+}
+body {
+    margin: 0;
+	padding: 0;
+
+    color: rgb(var(--color-black-text));
+    font: 500 17px/20px sans-serif
+}
+
+@media (min-width: 700px) {
+    body {
+        padding-bottom:var(--onetrust-banner-height,0)
+    }
+}
+
+
+
+header {
+	width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
+
+.heading {
+	text-align: center;
+	height: inherit;
+	background-color: #131f24;
+	box-shadow: 0 3px 10px;
+	padding: 1vw;
+    position: fixed; top: 0;
+    width: 100%;
+	z-index: 1;
+}
+#header_title {
+    height: inherit;
+	float: left;
+	margin: 0vw 2vw;
+    font-size: calc(14px + 2vw);
+    font-family: monospace;
+    font-weight: bold;
+    text-decoration: underline wavy;
+    color: #58a700;
+}
+
+
+.reg_button, .profile_button {
+    height: inherit;
+	background-color: #58a700;
+	text-align: center;
+	border-radius: 2vw;
+	margin-right: 4vw;
+	font-size: calc(10px + 2vw);
+	padding: 0.2% 1%;
+	border: 0;
+	text-decoration: none;
+	color: white;
+	user-select:none;
+}
+
+.profile_button {
+	width: 45%
+}
+
+.space {
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4px;
+}
+
+.form {
+    padding: 7%;
+    margin-top: 7%;
+    font-size: calc(1pem + 2vw);
+
+}
+
+.form p {
+    font-size: calc(0.7pem + 2vw);
+}
+
