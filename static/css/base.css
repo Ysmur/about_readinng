@@ -1,11 +1,12 @@
-
+* {
+outline: solid #123456;}
 :root {
     --viewport-height: 100dvh;
     --web-ui_button-border-radius: 16px;
     --color-snow: 19,31,36;
     --color-snow-always-light: 255,255,255;
     --color-snow-always-dark: 19,31,36;
-    --color-black-text: 60,60,60;
+    --color-black-text: 241,247,251;
     }
 html {
     overflow-scrolling: touch;
@@ -20,8 +21,18 @@ html {
     }
 }
 body {
-    margin: 0;
-	padding: 0;
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(19,31,36,1) 0%, rgba(123,123,123,0.644782913165266) 33%, rgba(88,167,0,0.5635504201680672) 72%);
+
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  height: 100vh;
+  justify-content: flex-start;
+  margin: 0px;
+  width: 100vw;
+
 
     color: rgb(var(--color-black-text));
     font: 500 17px/20px sans-serif
@@ -96,10 +107,27 @@ header {
     padding: 7%;
     margin-top: 7%;
     font-size: calc(1pem + 2vw);
+    color: rgb(var(--color-black-text));
 
 }
 
 .form p {
     font-size: calc(0.7pem + 2vw);
 }
+
+.profile_page{
+    padding: 7%;
+    margin-top: 7%;
+    font-size: calc(1pem + 2vw);
+    color: rgb(var(--color-black-text));
+    }
+
+.img-thumbnail {
+   display: flex;
+   flex-direction: row;
+   width: calc(150px + (300 - 150) * ((100vw - 500px) / (1920 - 500)));
+   border-radius: 25% 10%;
+
+}
+
 

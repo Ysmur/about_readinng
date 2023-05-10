@@ -47,8 +47,6 @@ class LoginStudentForm(FlaskForm):
 
 
 class EditPhoto(FlaskForm):
-    change_avatar = FileField('Выбрать', validators=[DataRequired()])
-
     submit_avatar = SubmitField('Изменить')
 
 

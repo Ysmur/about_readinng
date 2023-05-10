@@ -1,28 +1,32 @@
 {% extends "base.html" %}
 {% block nav %}
- <button class="reg_button" onclick="go_to_href('register')">Создать аккаунт</button>
+
 {% endblock %}
 {% block content %}
+
 <div class="profile_page">
+    <div>
         <h1>{{ username }}</h1>
         <br>
-        <img src="{{ user_avatar }}" alt="Фото профиля" class="img-thumbnail" width="50%">
         <form action="" method="post" enctype="multipart/form-data" id="avatar_form">
-            {{ forms[0].hidden_tag() }}
+        <div><p><label><img src="{{url_for('static', filename='user_data/' + user_avatar)}}" class="img-thumbnail"
+                                            align="left" width="150" height="150"/>
+                            <input type="file" id="photo" name="file" hidden>
+                        </label></div>
 
-            {{ forms[0].change_avatar }}
-            <br><br>
+            {{ forms[0].hidden_tag() }}
             {{ forms[0].submit_avatar(class="btn btn-secondary", type="submit") }}
         </form>
-        <br><br>
-        <h4 class="label">Дата создания: {{ registration_date }}</h4>
-        <h4 class="label">Выполнено заданий: {{ completed_tasks }}</h4>
     </div>
-    <br><br>
+        <div>
+        <h4 class="label"> &#8986; Регистрация: {{ registration_date }}</h4>
+        <h4 class="label">Выполнено заданий: {{ completed_tasks }}</h4>
+</div>
 
-    <br><br>
+    <hr><br>
     <form action="/logout" method="post">
         {{ forms[1].hidden_tag() }}
-        <p>{{ forms[1].logout(type="submit", class="btn btn-danger") }}</p>
+        <p>{{ forms[1].logout(type="submit", class="btn btn-success") }}</p>
     </form>
+       </div>
 {% endblock %}

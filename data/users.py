@@ -7,9 +7,6 @@ from werkzeug.security import *
 
 from .db_session import SqlAlchemyBase
 
-def binary_picture(filename):
-    f = open('static/images/' + filename, 'rb')
-    return f.read()
 
 class User(SqlAlchemyBase, UserMixin):
     __tablename__ = 'users'
@@ -23,7 +20,7 @@ class User(SqlAlchemyBase, UserMixin):
     surname = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     age = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
     role = sqlalchemy.Column(sqlalchemy.String, nullable=True, default='human')
-    avatar = sqlalchemy.Column(sqlalchemy.BLOB, default=binary_picture('reading-book.png'))
+    avatar = sqlalchemy.Column(sqlalchemy.String, default='static/images/avatar0.jpeg')
     registration_date = sqlalchemy.Column(sqlalchemy.Date, default=datetime.date.today)
     completed_books = sqlalchemy.Column(sqlalchemy.Integer, default=0)
 

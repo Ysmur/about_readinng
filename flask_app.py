@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, render_template, redirect, request
 from flask_login import LoginManager, login_required, current_user, logout_user, login_user
 from flask_wtf import FlaskForm
@@ -19,6 +21,18 @@ db_name = "db/myread.db"
 db_session.global_init(db_name)
 db_sess = db_session.create_session()
 
+def available_roles(params):
+    if current_user.is_authenticated:
+        if 'teacher' in current_user.role:
+            params['teacher'] = True
+        if 'parent' in current_user.role:
+            params['parent'] = True
+        if 'student' in current_user.role:
+            params['student'] = True
+        params['user_avatar'] = current_user.avatar
+        params['username'] = current_user.name
+
+
 @login_manager.user_loader
 def load_user(user_id):
     return db_sess.query(User).get(user_id)
@@ -30,13 +44,7 @@ def index():
               'teacher': False,
               'parent': False,
               'student': False}
-    if current_user.is_authenticated:
-        if 'teacher' in current_user.role:
-            params['teacher'] = True
-        if 'parent' in current_user.role:
-            params['parent'] = True
-        if 'student' in current_user.role:
-            params['student'] = True
+    available_roles(params)
     print(params)
     return render_template('base.html', **params)
 
@@ -165,15 +173,33 @@ def go_to_profile():
 
     # загружаем формы для взаимодействия с аккаунтом
     forms = (EditPhoto(), LogOut())
+    register_date = current_user.registration_date.strftime("%B %Y")
+    print(current_user.avatar)
+
     params = {
         'username': current_user.name,
         'user_avatar': current_user.avatar,
-        'registration_date': current_user.registration_date,
+        'registration_date': register_date,
         'completed_books': current_user.completed_books,
         'forms': forms,
         'title': 'Профиль'
     }
+    available_roles(params)
+    if forms[0].validate_on_submit():
+        if '.jpg' in str(request.files['file']) or '.png' in str(request.files['file']):
+            input_file = request.files['file']
+            if not os.path.isdir(f'static/user_data/{current_user.id}'):
+                os.mkdir(f'static/user_data/{current_user.id}')
+            avatar = f"{str(current_user.id)}/avatar.jpg"
+            new_img = open(f'static/user_data/{avatar}', 'wb')
+            new_img.write(input_file.read())
+            new_img.close()
 
+            current_user.avatar = avatar
+            db_sess.merge(current_user)
+            db_sess.commit()
+
+            return redirect('/profile')
 
 
     return render_template('profile.html', **params)

@@ -19,7 +19,7 @@
 <body>
 <header>
     <nav class="heading">
-        <a id="header_title">MyRead</a>
+        <a href="/" id="header_title">MyRead</a>
         {% if student %}
         <button class="reg_button" onclick="go_to_href('my_training')">Тренинг</button>
         {% endif %}
@@ -30,8 +30,12 @@
         <button class="reg_button" onclick="go_to_href('my_children')">Мои дети</button>
         {% endif %}
         {% if is_registered %}
-            <button class="reg_button" onclick="go_to_href('profile')">Профиль</button>
-            <button class="reg_button" onclick="go_to_href('logout')">Выйти</button>
+
+                <a  href="/profile">
+                    <img src="{{url_for('static', filename='user_data/' + user_avatar)}}"
+                         class="rounded-circle" title="{{username}}" width="50" height="50">
+                </a>
+
         {% else %}
          {% block nav %}
             <button class="reg_button" onclick="go_to_href('age')">Войти</button>
