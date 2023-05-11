@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="form">
+    <h1>Новый класс</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+
+        <p>
+            {{ form.name.label }}<br>
+            {{ form.name(class="form-control", type="name") }}<br>
+            {% for error in form.name.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.school.label }}<br>
+            {{ form.school(class="form-control", type="school") }}<br>
+            {% for error in form.school.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.number_class.label }}<br>
+            {{ form.number_class(class="form-control", type="number_class") }}<br>
+            {% for error in form.number_class.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.letter_class.label }}<br>
+            {{ form.letter_class(class="form-control", type="letter_class") }}<br>
+            {% for error in form.letter_class.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+
+        <p>{{ form.submit(type="submit", class="btn btn-success") }}</p>
+        <div>{{ message }}</div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block role %}
+<button class="reg_button" onclick="go_to_href('my_classes')">Мои классы</button>
+{% endblock %}
+
+{% block content %}
+<div class="profile_page">
+    <h3> Код класса: {{ current_class.code_class }}</h3>
+
+<div class="table_container">
+    <table class="table table-dark table-sm">
+        <tr class="align-middle my_row">
+            <td   >Фамилия</td>
+            <td  >Имя</td>
+            <td > Логин</td>
+
+        </tr>
+        {% for student in current_class.students.split() %}
+        <tr class="align-middle my_row">
+            <td >{{ names[student][0] }}</td>
+            <td  >{{names[student][1]}}</td>
+            <td >{{ names[student][2]}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+    <br>
+<div class="form_student">
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+
+        <p>
+            {{ form.name.label }}
+            {{ form.name(class="form-control", type="name") }}<br>
+            {% for error in form.name.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.surname.label }}<br>
+            {{ form.surname(class="form-control", type="surname") }}<br>
+            {% for error in form.surname.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.login.label }}<br>
+            {{ form.login(class="form-control", type="login") }}<br>
+            {% for error in form.login.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+
+
+        <p>{{ form.submit(type="submit", class="btn btn-success") }}</p>
+        <div>{{ message }}</div>
+    </form>
+</div>
+</div>
+{% endblock %}

@@ -1,13 +1,14 @@
 import os
-
+from sqlalchemy import func
 from flask import Flask, render_template, redirect, request
 from flask_login import LoginManager, login_required, current_user, logout_user, login_user
 from flask_wtf import FlaskForm
 
 from data import db_session
 from data.users import User
-from data.forms import RegisterForm, LoginForm, AgeForm, LoginStudentForm, RegisterStudentForm
-from data.forms import LogOut, EditPhoto
+from data.classes import Class
+from data.forms import RegisterForm, LoginForm, AgeForm, LoginStudentForm, RegisterStudentForm, LogOut, EditPhoto
+from data.forms import AddClassForm, AddStudentForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'myread_secret_key'
@@ -205,5 +206,78 @@ def go_to_profile():
     return render_template('profile.html', **params)
 
 
+@app.route('/my_classes', methods=['GET', 'POST'])
+@login_required
+def my_classes():
+    params = {'is_registered': current_user.is_authenticated,
+              'teacher': False,
+              'parent': False,
+              'student': False}
+    available_roles(params)
+    classes = db_sess.query(Class).all()
+    users = db_sess.query(User).all()
+    names = {name.id: (name.surname, name.name) for name in users}
+    return render_template("my_classes.html", jobs=classes, names=names, title='Classes', **params)
+
+
+@app.route('/new_class', methods=['GET', 'POST'])
+@login_required
+def addclass():
+    add_form = AddClassForm()
+    print('xaxa')
+    if add_form.validate_on_submit():
+        print('xa')
+        new_class = Class(
+            name=add_form.name.data,
+            class_leader=current_user.id,
+            code_class=f'{add_form.school.data}-{str(add_form.number_class.data)}-{add_form.letter_class.data}-',
+            students=''
+
+        )
+        db_sess.add(new_class)
+        db_sess.commit()
+        print('xa0')
+        return redirect('/my_classes')
+    params = {'is_registered': current_user.is_authenticated,
+              'teacher': False,
+              'parent': False,
+              'student': False}
+    available_roles(params)
+    return render_template('addclass.html', title='Adding a job', form=add_form, **params)
+
+@app.route('/classes/<code_class>', methods=['GET', 'POST'])
+@login_required
+def class_edit(code_class):
+    add_form = AddStudentForm()
+    current_class = db_sess.query(Class).filter(Class.code_class == code_class).first()
+    if add_form.validate_on_submit():
+        max_id = db_sess.query(func.max(User.id)).scalar()
+        print('xaxa', max_id)
+        user = User(
+            email=add_form.login.data,
+            name=add_form.name.data,
+            surname=add_form.surname.data,
+            role='student',
+            age=int(code_class.split('-')[1]) + 7)
+        user.set_password(code_class)
+        db_sess.add(user)
+        db_sess.commit()
+
+        current_class.students += f' {max_id + 1}'
+        db_sess.merge(current_class)
+        db_sess.commit()
+        return redirect('/my_classes')
+
+    params = {'is_registered': current_user.is_authenticated,
+              'teacher': False,
+              'parent': False,
+              'student': False}
+    available_roles(params)
+    users = db_sess.query(User).all()
+    names = {str(name.id): (name.surname, name.name, name.email) for name in users}
+    return render_template('addstudent.html', form=add_form, names=names, current_class=current_class, **params)
+
+
+
 if __name__ == '__main__':
-    app.run(port=8080, host='127.0.0.1')
+    app.run(port=8000, host='127.0.0.1')

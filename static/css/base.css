@@ -21,8 +21,8 @@ html {
     }
 }
 body {
-  background: rgb(2,0,36);
-  background: linear-gradient(90deg, rgba(19,31,36,1) 0%, rgba(123,123,123,0.644782913165266) 33%, rgba(88,167,0,0.5635504201680672) 72%);
+  background: rgb(19,31,36);
+  background: linear-gradient(90deg, rgba(19,31,36,1) 0%, rgba(123,123,123,0.644782913165266) 33%, rgba(123,123,123,0.5635504201680672) 72%);
 
 
   display: flex;
@@ -71,10 +71,11 @@ header {
 	float: left;
 	margin: 0vw 2vw;
     font-size: calc(14px + 2vw);
-    font-family: monospace;
+
     font-weight: bold;
     text-decoration: underline wavy;
     color: #58a700;
+    font-family: 'PenguinAttackCyrillic';
 }
 
 
@@ -88,8 +89,9 @@ header {
 	padding: 0.2% 1%;
 	border: 0;
 	text-decoration: none;
-	color: white;
+	color: #131f24;
 	user-select:none;
+	font-family: 'PenguinAttackCyrillic';
 }
 
 .profile_button {
@@ -103,7 +105,7 @@ header {
     z-index: 4px;
 }
 
-.form {
+.form  {
     padding: 7%;
     margin-top: 7%;
     font-size: calc(1pem + 2vw);
@@ -113,6 +115,12 @@ header {
 
 .form p {
     font-size: calc(0.7pem + 2vw);
+}
+
+.form_student {
+  margin-top: 2%;
+  margin-left: 2%;
+  width: calc(400px + (700 - 400) * ((100vw - 500px) / (1920 - 500)));
 }
 
 .profile_page{
@@ -128,6 +136,18 @@ header {
    width: calc(150px + (300 - 150) * ((100vw - 500px) / (1920 - 500)));
    border-radius: 25% 10%;
 
+}
+
+ @font-face {
+	font-family: 'PenguinAttackCyrillic';
+	src: url("../font/19844.otf");
+}
+
+. table_container {
+  padding: 7%;
+  margin-top: 7%;
+  width: calc(400px + (1200 - 400) * ((100vw - 500px) / (1920 - 500)));
+  font-size: calc(1pem + 2vw);
 }
 
 

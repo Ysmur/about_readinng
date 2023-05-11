@@ -20,7 +20,7 @@ class User(SqlAlchemyBase, UserMixin):
     surname = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     age = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
     role = sqlalchemy.Column(sqlalchemy.String, nullable=True, default='human')
-    avatar = sqlalchemy.Column(sqlalchemy.String, default='static/images/avatar0.jpeg')
+    avatar = sqlalchemy.Column(sqlalchemy.String, default='avatar0.jpeg')
     registration_date = sqlalchemy.Column(sqlalchemy.Date, default=datetime.date.today)
     completed_books = sqlalchemy.Column(sqlalchemy.Integer, default=0)
 

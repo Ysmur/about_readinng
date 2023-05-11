@@ -52,3 +52,16 @@ class EditPhoto(FlaskForm):
 
 class LogOut(FlaskForm):
     logout = SubmitField('Выйти')
+
+class AddClassForm(FlaskForm):
+    name = StringField('Назовите ваш класс', validators=[DataRequired()])
+    school = StringField('Номер школы', validators=[DataRequired()])
+    number_class = IntegerField('Номер класса (только цифры)', validators=[DataRequired()])
+    letter_class = StringField('Буква класса', validators=[DataRequired()])
+    submit = SubmitField('Создать класс')
+
+class AddStudentForm(FlaskForm):
+    name = StringField('Имя', validators=[DataRequired()])
+    surname = StringField('Фамилия', validators=[DataRequired()])
+    login = StringField('Логин', validators=[DataRequired()])
+    submit = SubmitField('Добавить в класс')
