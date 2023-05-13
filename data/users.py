@@ -24,6 +24,8 @@ class User(SqlAlchemyBase, UserMixin):
     registration_date = sqlalchemy.Column(sqlalchemy.Date, default=datetime.date.today)
     completed_books = sqlalchemy.Column(sqlalchemy.Integer, default=0)
 
+    comments = orm.relationship("Comment", back_populates='user')
+
     def set_password(self, password):
         self.hashed_password = generate_password_hash(password)
 

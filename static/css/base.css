@@ -150,4 +150,56 @@ header {
   font-size: calc(1pem + 2vw);
 }
 
+.days-list{
+    padding: 7%;
+    margin-top: 7%;
+    margin-left:-20px;
+    margin-right:20px;
+
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    column-gap:20px;
+    row-gap:30px;
+    font-size: calc(14px + (50 - 14) * ((100vw - 500px) / (1920 - 500)));
+    font-family: 'PenguinAttackCyrillic';
+}
+
+.days-list img{
+   margin: 10px auto 20px;
+   display: block;
+   width: calc(75px + (200 - 75) * ((100vw - 500px) / (1920 - 500)));
+}
+
+.book_page {
+    padding: 5% 7% 1%;
+    margin-top: 7%;
+    margin-left:-20px;
+    margin-right:20px;
+    display:grid;
+    grid-template-columns: 1fr 2fr;
+    column-gap:20px;
+    font-size: calc(10px + (32 - 10) * ((100vw - 500px) / (1920 - 500)));
+
+}
+
+.book_page img{
+    margin: 10px auto 20px;
+    display: block;
+    width: calc(150px + (300 - 150) * ((100vw - 500px) / (1920 - 500)));
+}
+
+.book_comment {
+    padding: 1% 7%;
+    margin-left:-20px;
+    margin-right:20px;
+    display:grid;
+    grid-template-columns: 1fr 2fr;
+    column-gap:20px;
+    font-size: calc(10px + (32 - 10) * ((100vw - 500px) / (1920 - 500)));
+
+}
+
+
+
+
 

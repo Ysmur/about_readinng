@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!--<ol class="days-list" >-->
+<div class="days-list">
+    {% for book in books%}
+    <article class="good">
+          <h2 class="good-name">{{book.author}} {{book.title}}</h2>
+          <a href="/books/{{book.id}}"> <img src="{{url_for('static', filename='user_data/' + book.avatar)}}"></a>
+    </article>
+
+  <!--  <li title="{{book.author}} {{book.title}}">
+       <a href=""> <img src="{{url_for('static', filename='user_data/' + book.avatar)}}"></a>
+    </li>-->
+    {% endfor %}
+  <!--</ol>--></div>
+{% endblock %}

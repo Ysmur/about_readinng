@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block role %}
+        <button class="reg_button" onclick="go_to_href('student_base')">Каталог</button>
+        {% if student %}
+        <button class="reg_button" onclick="go_to_href('my_training')">Тренинг</button>
+        {% endif %}
+        {% if teacher %}
+        <button class="reg_button" onclick="go_to_href('my_classes')">Мои классы</button>
+        {% endif %}
+        {% if parent %}
+        <button class="reg_button" onclick="go_to_href('my_children')">Мои дети</button>
+        {% endif %}
+{% endblock %}
+{% block content %}
+
+<div class="book_page">
+    <section class="bio">
+        <img src="{{url_for('static', filename='user_data/' + book.avatar)}}" alt="Обложка">
+
+    <form action="" method="post" id="task">
+        {{ form_task.hidden_tag() }}
+        <p>{{ form_task.submit(type="submit", class="btn btn-success") }}</p>
+        <div>{{ message }}</div>
+    </form>
+
+    </section>
+    <section class="photo">
+      <h2 class="section-title">{{book.title}}</h2>
+      <h4 class="section-title">{{book.author}}</h4>
+      <p>{{book.about}}</p>
+    </section>
+</div>
+<br>
+<div class="book_comment">
+
+<h1>Добавление комментария</h1>
+<form action="" method="post" id="comment">
+    {{ form_comment.hidden_tag() }}
+
+    <p>
+        {{ form_comment.content(class="form-control") }}<br>
+        {% for error in form_comment.content.errors %}
+            <p content="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>{{ form_comment.is_private() }} {{ form_comment.is_private.label }}</p>
+    <p>{{ form_comment.submit(type="submit", class="btn btn-success") }}</p>
+    {{message}}
+</form>
+    </div>
+<br>
+<div class="book_comment">
+
+<h1>Записи в блоге</h1>
+{% for item in comments%}
+<div class="form_student">
+    <h2>{{item.book.title}}</h2>
+    <div>
+        {{item.content}}
+    </div>
+    <div>
+        Автор - {{item.user.name}}, Дата написания - {{item.created_date}}
+    </div>
+</div>
+{% endfor %}
+</div>
+{% endblock %}

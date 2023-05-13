@@ -7,8 +7,11 @@ from flask_wtf import FlaskForm
 from data import db_session
 from data.users import User
 from data.classes import Class
+from data.books import Book
+from data.comments import Comment
 from data.forms import RegisterForm, LoginForm, AgeForm, LoginStudentForm, RegisterStudentForm, LogOut, EditPhoto
 from data.forms import AddClassForm, AddStudentForm
+from data.forms import BookForm, CommentBookForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'myread_secret_key'
@@ -46,16 +49,15 @@ def index():
               'parent': False,
               'student': False}
     available_roles(params)
-    print(params)
+    if params['student']:
+        return redirect("/student_base")
     return render_template('base.html', **params)
 
 
 @app.route('/age', methods=['GET', 'POST'])
 def age():
     form = AgeForm()
-    print('xa')
     if form.validate():
-        print('xaxa')
         if form.validate_age(form.age):
             return redirect("/login")
         return redirect("/login_student")
@@ -175,7 +177,6 @@ def go_to_profile():
     # загружаем формы для взаимодействия с аккаунтом
     forms = (EditPhoto(), LogOut())
     register_date = current_user.registration_date.strftime("%B %Y")
-    print(current_user.avatar)
 
     params = {
         'username': current_user.name,
@@ -224,9 +225,7 @@ def my_classes():
 @login_required
 def addclass():
     add_form = AddClassForm()
-    print('xaxa')
     if add_form.validate_on_submit():
-        print('xa')
         new_class = Class(
             name=add_form.name.data,
             class_leader=current_user.id,
@@ -236,7 +235,6 @@ def addclass():
         )
         db_sess.add(new_class)
         db_sess.commit()
-        print('xa0')
         return redirect('/my_classes')
     params = {'is_registered': current_user.is_authenticated,
               'teacher': False,
@@ -252,7 +250,6 @@ def class_edit(code_class):
     current_class = db_sess.query(Class).filter(Class.code_class == code_class).first()
     if add_form.validate_on_submit():
         max_id = db_sess.query(func.max(User.id)).scalar()
-        print('xaxa', max_id)
         user = User(
             email=add_form.login.data,
             name=add_form.name.data,
@@ -276,6 +273,55 @@ def class_edit(code_class):
     users = db_sess.query(User).all()
     names = {str(name.id): (name.surname, name.name, name.email) for name in users}
     return render_template('addstudent.html', form=add_form, names=names, current_class=current_class, **params)
+
+@app.route('/student_base', methods=['GET'])
+@login_required
+def student_base():
+    params = {'is_registered': current_user.is_authenticated,
+              'teacher': False,
+              'parent': False,
+              'student': False}
+    available_roles(params)
+    age = str(current_user.age - 7)
+    books = db_sess.query(Book).filter(Book.for_class.like(f'%{age}%')).all()
+    if books:
+        print(books[0].avatar)
+
+    return render_template("student_base.html", books=books, title='Books', **params)
+
+
+@app.route('/books/<book_id>', methods=['GET', 'POST'])
+@login_required
+def book(book_id):
+    form_task = BookForm()
+    form_comment = CommentBookForm()
+    # if form.validate_on_submit():
+    #     max_id = db_sess.query(func.max(User.id)).scalar()
+    #     user = User(
+    #         email=add_form.login.data,
+    #         name=add_form.name.data,
+    #         surname=add_form.surname.data,
+    #         role='student',
+    #         age=int(code_class.split('-')[1]) + 7)
+    #     user.set_password(code_class)
+    #     db_sess.add(user)
+    #     db_sess.commit()
+    #
+    #     current_class.students += f' {max_id + 1}'
+    #     db_sess.merge(current_class)
+    #     db_sess.commit()
+    #     return redirect('/my_classes')
+
+    params = {'is_registered': current_user.is_authenticated,
+              'teacher': False,
+              'parent': False,
+              'student': False}
+    available_roles(params)
+    comments = db_sess.query(Comment).filter(Comment.book_id == book_id).all()
+    current_book = db_sess.query(Book).filter(Book.id == book_id).first()
+    return render_template('current_book.html',
+                           form_task=form_task, form_comment=form_comment,
+                           book=current_book, comments=comments, **params)
 
 
 

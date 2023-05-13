@@ -65,3 +65,11 @@ class AddStudentForm(FlaskForm):
     surname = StringField('Фамилия', validators=[DataRequired()])
     login = StringField('Логин', validators=[DataRequired()])
     submit = SubmitField('Добавить в класс')
+
+class BookForm(FlaskForm):
+    submit = SubmitField('Выполнить задания по книге')
+
+class CommentBookForm(FlaskForm):
+    content = TextAreaField('Комментарий', validators=[DataRequired()])
+    is_private = BooleanField('Личное')
+    submit = SubmitField('Сохранить')
