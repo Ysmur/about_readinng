@@ -8,6 +8,7 @@ from data import db_session
 from data.users import User
 from data.classes import Class
 from data.books import Book
+from data.genres import Genre
 from data.comments import Comment
 from data.forms import RegisterForm, LoginForm, AgeForm, LoginStudentForm, RegisterStudentForm, LogOut, EditPhoto
 from data.forms import AddClassForm, AddStudentForm
@@ -50,7 +51,11 @@ def index():
               'student': False}
     available_roles(params)
     if params['student']:
-        return redirect("/student_base")
+        current_class = str(current_user.age - 7)
+        return redirect(f"/book_base/student_base_new_1_{current_class}")
+    elif params['teacher']:
+        current_class = 'all'
+        return redirect(f"/book_base/teacher_base_1_{current_class}")
     return render_template('base.html', **params)
 
 
@@ -105,6 +110,15 @@ def logout():
 
     return redirect("/")
 
+@app.route('/age_reg', methods=['GET', 'POST'])
+def age_reg():
+    form = AgeForm()
+    if form.validate():
+        if form.validate_age(form.age):
+            return redirect("/register")
+        return redirect("/register_student")
+
+    return render_template('age.html', title='Авторизация1', form=form)
 @app.route('/register_student', methods=['GET', 'POST'])
 def register_student():
     form = RegisterStudentForm()
@@ -112,9 +126,14 @@ def register_student():
 
     if form.validate_on_submit():
         user = db_sess.query(User).filter(User.email == form.login.data).all()
+        current_class = db_sess.query(Class).filter(Class.code_class == form.code_class.data).first()
+        if not current_class:
+            return render_template('register_student.html', title='Регистрация',
+                                   form=form,
+                                   message="Обратись к учителю за кодом класса")
         if user:
             for us in user:
-                if user.check_password(form.code_class.data):
+                if us.check_password(form.code_class.data):
                     return render_template('register_student.html', title='Регистрация',
                                    form=form,
                                    message="Такой пользователь уже есть")
@@ -274,20 +293,35 @@ def class_edit(code_class):
     names = {str(name.id): (name.surname, name.name, name.email) for name in users}
     return render_template('addstudent.html', form=add_form, names=names, current_class=current_class, **params)
 
-@app.route('/student_base', methods=['GET'])
+@app.route('/book_base/<action>', methods=['GET'])
 @login_required
-def student_base():
+def student_base(action):
+    print(action)
     params = {'is_registered': current_user.is_authenticated,
               'teacher': False,
               'parent': False,
               'student': False}
     available_roles(params)
-    age = str(current_user.age - 7)
-    books = db_sess.query(Book).filter(Book.for_class.like(f'%{age}%')).all()
-    if books:
-        print(books[0].avatar)
-
-    return render_template("student_base.html", books=books, title='Books', **params)
+    genres = db_sess.query(Genre).all()
+    if "student_base" in action:
+        current_class = action.split('_')[-1]
+        work = action.split('_')[-3]
+        print(action.split('_')[-2])
+        if work == 'new':
+            books = db_sess.query(Book).filter(Book.for_class.like(f'%{current_class}%')).all()
+            return render_template("student_base.html", current_class=current_class, current_genre=action.split('_')[-2],
+                                   work=work, books=books, genres=genres, title='Books', **params)
+    if "teacher_base" in action:
+        current_class = action.split('_')[-1]
+        if current_class == 'all':
+            books = db_sess.query(Book).all()
+            return render_template("teacher_base.html", current_class=current_class, genres=genres,
+                                   current_genre=action.split('_')[-2], books=books, title='Books', **params)
+        else:
+            books = db_sess.query(Book).filter(Book.for_class.like(f'%{current_class}%')).all()
+            return render_template("teacher_base.html", current_class=current_class, genres=genres,
+                                   books=books, title='Books', **params)
+    return render_template("base.html", title='Books', **params)
 
 
 @app.route('/books/<book_id>', methods=['GET', 'POST'])
@@ -295,35 +329,39 @@ def student_base():
 def book(book_id):
     form_task = BookForm()
     form_comment = CommentBookForm()
-    # if form.validate_on_submit():
-    #     max_id = db_sess.query(func.max(User.id)).scalar()
-    #     user = User(
-    #         email=add_form.login.data,
-    #         name=add_form.name.data,
-    #         surname=add_form.surname.data,
-    #         role='student',
-    #         age=int(code_class.split('-')[1]) + 7)
-    #     user.set_password(code_class)
-    #     db_sess.add(user)
-    #     db_sess.commit()
-    #
-    #     current_class.students += f' {max_id + 1}'
-    #     db_sess.merge(current_class)
-    #     db_sess.commit()
-    #     return redirect('/my_classes')
+    if form_comment.validate_on_submit():
+        comment = Comment(
+        content = form_comment.content.data,
+        is_private = form_comment.is_private.data,
+        book_id = book_id,
+        user_id = current_user.id)
+
+        db_sess.add(comment)
+        db_sess.commit()
+
+        return redirect(f'/books/{book_id}')
 
     params = {'is_registered': current_user.is_authenticated,
               'teacher': False,
               'parent': False,
               'student': False}
     available_roles(params)
-    comments = db_sess.query(Comment).filter(Comment.book_id == book_id).all()
+    my_comments = db_sess.query(Comment).filter(Comment.book_id == book_id).filter(Comment.user_id == current_user.id).all()
+    comments = db_sess.query(Comment).filter(Comment.book_id == book_id).filter(Comment.user_id != current_user.id).filter(Comment.is_private != True).all()
     current_book = db_sess.query(Book).filter(Book.id == book_id).first()
     return render_template('current_book.html',
                            form_task=form_task, form_comment=form_comment,
-                           book=current_book, comments=comments, **params)
+                           book=current_book, my_comments=my_comments, comments=comments, **params)
 
 
 
 if __name__ == '__main__':
     app.run(port=8000, host='127.0.0.1')
+    # s = [('s', 'Сказки'), ('a', 'Приключения'), ('f', 'Фантастика'), ('r', 'О ровесниках'),
+    #  ('g', 'О животных'), ('d', 'Детективы'), ('p', 'Стихи'), ('l', 'О любви и дружбе'), ('u', 'Учебная')]
+    # for i in s:
+    #     user = Genre()
+    #     user.title = i[1]
+    #     db_sess = db_session.create_session()
+    #     db_sess.add(user)
+    #     db_sess.commit()

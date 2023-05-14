@@ -7,29 +7,25 @@
     <section class="books_page_filter">
         <h3>Фильтр: </h3>
             <fieldset>
-              <legend>Класс: {{ current_class }}</legend>
-            </fieldset>
-
-            <fieldset>
-                  {% set works= [('new', 'новые'), ('work', 'в работе'), ('completed', 'завершенные')] %}
-              <legend>Готовность:</legend>
+                  {% set class = ['all', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'] %}
+              <legend>Класс:</legend>
               <h4 class="filter-price">
-                  {% for item in works %}
-                <label>
-                    {% if item[0] == work %}
-                    <input type="radio" name="works" value={{item}} checked>
-                    {% else %}
-                    <input type="radio" name="works" value={{item}}
-                    onclick="go_to_href('book_base/student_base_{{item[0]}}_{{current_genre}}_{{current_class}}')">
-                    {% endif %}
+                  {% for item in class %}
+                      <label>
+                          {% if item == current_class %}
+                            <input type="radio" name="classes" value={{item}} checked>
+                          {% else %}
+                            <input type="radio" name="classes" value={{item}}
+                                   onclick="go_to_href('book_base/teacher_base_{{current_genre}}_{{item}}')">
+                          {% endif %}
+                        {{item}}
+                      </label>
 
-                    <nobr>{{item[1]}}</nobr>
-                </label>
                   {% endfor %}
               </h4>
             </fieldset>
 
-        <fieldset>
+            <fieldset>
               <legend>Жанры:</legend>
               <h4 class="filter-price">
                   {% for item in genres %}
@@ -38,7 +34,7 @@
                             <input type="radio" name="genres" value={{item.id}} checked>
                           {% else %}
                             <input type="radio" name="genres" value={{item.id}}
-                                   onclick="go_to_href('book_base/student_base_{{work}}_{{item.id}}_{{current_class}}')">
+                                   onclick="go_to_href('book_base/teacher_base_{{item.id}}_{{current_class}}')">
                           {% endif %}
                           <nobr> {{item.title}} </nobr>
                       </label>

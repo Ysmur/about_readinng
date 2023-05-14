@@ -66,6 +66,7 @@ class AddStudentForm(FlaskForm):
     login = StringField('Логин', validators=[DataRequired()])
     submit = SubmitField('Добавить в класс')
 
+
 class BookForm(FlaskForm):
     submit = SubmitField('Выполнить задания по книге')
 

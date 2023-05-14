@@ -170,6 +170,18 @@ header {
    width: calc(75px + (200 - 75) * ((100vw - 500px) / (1920 - 500)));
 }
 
+.books_page_sort {
+   grid-column-start: 2;
+  grid-column-end: -1;
+}
+
+.books_page_filter {
+   grid-row-start: 1;
+   grid-row-end: 4;
+}
+
+
+
 .book_page {
     padding: 5% 7% 1%;
     margin-top: 7%;
@@ -197,6 +209,25 @@ header {
     column-gap:20px;
     font-size: calc(10px + (32 - 10) * ((100vw - 500px) / (1920 - 500)));
 
+}
+
+.title_book_page {
+
+     grid-column-start: 1;
+  grid-column-end: -1;
+
+}
+
+.comment {
+  padding: 1% 7%;
+    margin-left:-20px;
+    margin-right:20px;
+outline: solid #f23456;
+  display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    column-gap:20px;
+    row-gap:30px;
+    font-size: calc(14px + (28 - 14) * ((100vw - 500px) / (1920 - 500)));
 }
 
 
