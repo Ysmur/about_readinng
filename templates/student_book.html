@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block role %}
+        <button class="reg_button" onclick="go_to_href('')">Каталог</button>
+
+{% endblock %}
+{% block content %}
+<!--<ol class="days-list" >-->
+
+<div class="days-list">
+    <section class="books_page_task">
+        <h3>Задания по книге: </h3>
+            <fieldset>
+                <legend><span style="background: #58a700;">{{ current_book.title }}</span></legend>
+                  {% set works= [('1', 'Выбери подходящую обложку'),
+                                 ('2', 'Загрузи свою обложку'),
+                                 ('3', 'Выбери лучшее краткое содержание книги'),
+                                 ('4', 'Создай свой вариант "Саммари" к книге'),
+                                 ('5', 'Нарисуй главного героя'),
+                                 ('6', '5 фактов об авторе'),
+                                 ('7', 'Расшифруй непонятное слово'),
+                                 ('8', 'Аудио-фрагмент в твоем исполнении'),
+                                 ('9', 'Предложи свой вариант задания по книге') ] %}
+              <h4 class="filter-price">
+                  {% for item in works %}
+                <label>
+                    {% if item[0] == work %}
+                    <input type="radio" name="works" value={{item}} checked>
+                    {% else %}
+                    <input type="radio" name="works" value={{item}}
+                    onclick="go_to_href('book_base/student_base_{{item[0]}}_{{current_genre}}_{{current_class}}')">
+                    {% endif %}
+
+                    <nobr>{{item[1]}}</nobr>
+                </label>
+                  {% endfor %}
+              </h4>
+            </fieldset>
+
+
+    </section>
+    <section class="books_page_ready">
+          <h3>Готовность:
+
+          </h3>
+    </section>
+
+    <section class="books_page_ready">
+          <h3>Здесь будет само задание
+
+          </h3>
+    </section>
+
+
+</div>
+{% endblock %}

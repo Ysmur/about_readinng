@@ -328,6 +328,10 @@ def student_base(action):
 @login_required
 def book(book_id):
     form_task = BookForm()
+    if form_task.validate_on_submit():
+        return redirect(f'/student_book/{book_id}')
+
+
     form_comment = CommentBookForm()
     if form_comment.validate_on_submit():
         comment = Comment(
@@ -346,6 +350,7 @@ def book(book_id):
               'parent': False,
               'student': False}
     available_roles(params)
+
     my_comments = db_sess.query(Comment).filter(Comment.book_id == book_id).filter(Comment.user_id == current_user.id).all()
     comments = db_sess.query(Comment).filter(Comment.book_id == book_id).filter(Comment.user_id != current_user.id).filter(Comment.is_private != True).all()
     current_book = db_sess.query(Book).filter(Book.id == book_id).first()
@@ -353,6 +358,18 @@ def book(book_id):
                            form_task=form_task, form_comment=form_comment,
                            book=current_book, my_comments=my_comments, comments=comments, **params)
 
+@app.route('/student_book/<book_id>', methods=['GET', 'POST'])
+@login_required
+def student_book(book_id):
+    params = {'is_registered': current_user.is_authenticated,
+              'teacher': False,
+              'parent': False,
+              'student': False}
+    available_roles(params)
+    current_book = db_sess.query(Book).filter(Book.id == book_id).first()
+    work = '1'
+    print('xa')
+    return render_template('student_book.html', current_book=current_book, work=work, **params)
 
 
 if __name__ == '__main__':

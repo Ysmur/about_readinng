@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block role %}
-        <button class="reg_button" onclick="go_to_href('student_base')">Каталог</button>
+        <button class="reg_button" onclick="go_to_href('')">Каталог</button>
         {% if student %}
-        <button class="reg_button" onclick="go_to_href('my_training')">Тренинг</button>
+        <button class="reg_button" onclick="go_to_href('my_training')">Мои задания</button>
         {% endif %}
         {% if teacher %}
         <button class="reg_button" onclick="go_to_href('my_classes')">Мои классы</button>

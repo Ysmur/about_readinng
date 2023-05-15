@@ -1,5 +1,5 @@
-* {
-outline: solid #123456;}
+/* {
+outline: solid #123456;}*/
 :root {
     --viewport-height: 100dvh;
     --web-ui_button-border-radius: 16px;
@@ -22,7 +22,7 @@ html {
 }
 body {
   background: rgb(19,31,36);
-  background: linear-gradient(90deg, rgba(19,31,36,1) 0%, rgba(123,123,123,0.644782913165266) 33%, rgba(123,123,123,0.5635504201680672) 72%);
+  background: linear-gradient(90deg, rgba(50,81,95,1) 0%, rgba(123,123,123,0.644782913165266) 33%, rgba(123,123,123,0.5635504201680672) 72%);
 
 
   display: flex;
@@ -180,6 +180,18 @@ header {
    grid-row-end: 4;
 }
 
+.books_page_ready {
+ grid-column-start: 3;
+  grid-column-end: -1;
+}
+
+.books_page_task {
+
+grid-column-start: 1;
+  grid-column-end: 3;
+ grid-row-start: 1;
+   grid-row-end: 4;
+}
 
 
 .book_page {
