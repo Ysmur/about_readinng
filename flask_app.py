@@ -335,10 +335,10 @@ def book(book_id):
     form_comment = CommentBookForm()
     if form_comment.validate_on_submit():
         comment = Comment(
-        content = form_comment.content.data,
-        is_private = form_comment.is_private.data,
-        book_id = book_id,
-        user_id = current_user.id)
+        content=form_comment.content.data,
+        is_private=form_comment.is_private.data,
+        book_id=book_id,
+        user_id=current_user.id)
 
         db_sess.add(comment)
         db_sess.commit()
@@ -352,6 +352,7 @@ def book(book_id):
     available_roles(params)
 
     my_comments = db_sess.query(Comment).filter(Comment.book_id == book_id).filter(Comment.user_id == current_user.id).all()
+    print(my_comments)
     comments = db_sess.query(Comment).filter(Comment.book_id == book_id).filter(Comment.user_id != current_user.id).filter(Comment.is_private != True).all()
     current_book = db_sess.query(Book).filter(Book.id == book_id).first()
     return render_template('current_book.html',

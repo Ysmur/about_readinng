@@ -7,20 +7,24 @@
 <!--<ol class="days-list" >-->
 
 <div class="days-list">
-    <section class="books_page_task">
-        <h3>Задания по книге: </h3>
-            <fieldset>
-                <legend><span style="background: #58a700;">{{ current_book.title }}</span></legend>
+    <section >
+        <fieldset>
+        <h3>Задания по книге:  <progress id="tasks" max="100" value="70"> 70% </progress></h3>
+        <legend><span style="background: #58a700;">{{ current_book.title }}</span></legend>
+
+
+
+
                   {% set works= [('1', 'Выбери подходящую обложку'),
                                  ('2', 'Загрузи свою обложку'),
-                                 ('3', 'Выбери лучшее краткое содержание книги'),
+                                 ('3', 'Выбери лучшее описание сюжета'),
                                  ('4', 'Создай свой вариант "Саммари" к книге'),
                                  ('5', 'Нарисуй главного героя'),
                                  ('6', '5 фактов об авторе'),
                                  ('7', 'Расшифруй непонятное слово'),
                                  ('8', 'Аудио-фрагмент в твоем исполнении'),
-                                 ('9', 'Предложи свой вариант задания по книге') ] %}
-              <h4 class="filter-price">
+                                 ('9', 'Предложи свой вариант задания') ] %}
+              <h6>
                   {% for item in works %}
                 <label>
                     {% if item[0] == work %}
@@ -33,16 +37,12 @@
                     <nobr>{{item[1]}}</nobr>
                 </label>
                   {% endfor %}
-              </h4>
+              </h6>
             </fieldset>
 
 
     </section>
-    <section class="books_page_ready">
-          <h3>Готовность:
-
-          </h3>
-    </section>
+</div>
 
     <section class="books_page_ready">
           <h3>Здесь будет само задание
@@ -51,5 +51,5 @@
     </section>
 
 
-</div>
+
 {% endblock %}

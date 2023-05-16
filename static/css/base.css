@@ -27,7 +27,7 @@ body {
 
   display: flex;
   flex-direction: column;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   height: 100vh;
   justify-content: flex-start;
   margin: 0px;
@@ -94,16 +94,6 @@ header {
 	font-family: 'PenguinAttackCyrillic';
 }
 
-.profile_button {
-	width: 45%
-}
-
-.space {
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 4px;
-}
 
 .form  {
     padding: 7%;
@@ -152,22 +142,52 @@ header {
 
 .days-list{
     padding: 7%;
-    margin-top: 7%;
-    margin-left:-20px;
-    margin-right:20px;
+    margin-top: 8%;
+    margin-right: 8%;
+    margin-left: 1%;
 
     display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(1fr, 1fr));
     column-gap:20px;
     row-gap:30px;
-    font-size: calc(14px + (50 - 14) * ((100vw - 500px) / (1920 - 500)));
-    font-family: 'PenguinAttackCyrillic';
+    font-size: calc(16px + (32 - 16) * ((100vw - 500px) / (1920 - 500)));
 }
 
-.days-list img{
+.days-list-many {
+ margin-right: 8%;
+    margin-left: 1%;
+    display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   justify-content: space-evenly;
+
+}
+.days-list-many a{
+    text-decoration: none;
+    color: rgb(19,31,36);
+   }
+.days-list a :visited { text-decoration: none; }
+.days-list a:active { text-decoration: none; }
+.days-list a:hover {
+    text-decoration: underline; /* Делает ссылку подчеркнутой при наведении на нее курсора */
+     /* Цвет ссылки */
+   }
+
+.days-list a{
+    text-decoration: none;
+    color: rgb(19,31,36);
+   }
+.days-list a :visited { text-decoration: none; }
+.days-list a:active { text-decoration: none; }
+.days-list a:hover {
+    text-decoration: underline; /* Делает ссылку подчеркнутой при наведении на нее курсора */
+     /* Цвет ссылки */
+   }
+
+.days-list-img{
    margin: 10px auto 20px;
    display: block;
-   width: calc(75px + (200 - 75) * ((100vw - 500px) / (1920 - 500)));
+   width: calc(85px + (200 - 85) * ((100vw - 500px) / (1920 - 500)));
 }
 
 .books_page_sort {
@@ -195,14 +215,14 @@ grid-column-start: 1;
 
 
 .book_page {
+
     padding: 5% 7% 1%;
     margin-top: 7%;
-    margin-left:-20px;
-    margin-right:20px;
-    display:grid;
-    grid-template-columns: 1fr 2fr;
-    column-gap:20px;
-    font-size: calc(10px + (32 - 10) * ((100vw - 500px) / (1920 - 500)));
+margin-right: 8%;
+    margin-left: 1%;
+flex-direction: row;
+   flex-wrap: wrap;
+    font-size: calc(16px + (28 - 16) * ((100vw - 500px) / (1920 - 500)));
 
 }
 
@@ -223,18 +243,17 @@ grid-column-start: 1;
 
 }
 
-.title_book_page {
+/*.title_book_page {
 
      grid-column-start: 1;
   grid-column-end: -1;
 
-}
+}*/
 
 .comment {
   padding: 1% 7%;
     margin-left:-20px;
     margin-right:20px;
-outline: solid #f23456;
   display:grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     column-gap:20px;
@@ -242,7 +261,9 @@ outline: solid #f23456;
     font-size: calc(14px + (28 - 14) * ((100vw - 500px) / (1920 - 500)));
 }
 
-
+progress {
+  accent-color: #58a700;
+}
 
 
 

@@ -8,7 +8,7 @@
         <h3>Фильтр: </h3>
             <fieldset>
                   {% set class = ['all', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'] %}
-              <legend>Класс:</legend>
+              <legend><u>Класс:</u></legend>
               <h4 class="filter-price">
                   {% for item in class %}
                       <label>
@@ -26,7 +26,7 @@
             </fieldset>
 
             <fieldset>
-              <legend>Жанры:</legend>
+              <legend><u>Жанры:</u></legend>
               <h4 class="filter-price">
                   {% for item in genres %}
                       <label>
@@ -44,17 +44,19 @@
             </fieldset>
     </section>
     <section class="books_page_sort">
-          <h3>Сортировка:
-              <a href="#"><nobr>по автору </nobr></a>
+          <legend><u>Сортировка:</u></legend>
+             <p><a href="#"><nobr>по автору </nobr></a>
               <a href="#"><nobr>по названию</nobr></a>
-            <a href="#"><nobr>по рейтингу</nobr></a>
-          </h3>
-    </section>
+                 <a href="#"><nobr>по рейтингу</nobr></a></p>
 
+    </section>
+</div>
+<div class="days-list-many">
     {% for book in books%}
-    <article class="good">
-          <h2 class="good-name">{{book.author}} {{book.title}}</h2>
-          <a href="/books/{{book.id}}"> <img src="{{url_for('static', filename='user_data/' + book.avatar)}}"></a>
+    <article><a href="/books/{{book.id}}">
+         <h4 ><span style="background: #58a700;"><i>{{book.likes}}</i></span> {{book.title}}</h4>
+        <h5 >{{book.author}} </h5>
+           <img src="{{url_for('static', filename='user_data/' + book.avatar)}}"></a>
     </article>
 
     {% endfor %}
