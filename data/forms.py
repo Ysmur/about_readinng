@@ -49,6 +49,8 @@ class LoginStudentForm(FlaskForm):
 class EditPhoto(FlaskForm):
     submit_avatar = SubmitField('Изменить')
 
+class ChoiceCover(FlaskForm):
+    submit_avatar = SubmitField('Выбрать')
 
 class LogOut(FlaskForm):
     logout = SubmitField('Выйти')

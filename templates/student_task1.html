@@ -1,0 +1,30 @@
+{% extends "student_book.html" %}
+
+{% block task %}
+ <fieldset>
+<label> Выбери подходящую обложку для книги </label>
+<span style="color: #dc3545"> в разработке...</span>
+  <form action="" method="post" enctype="multipart/form-data" id="form">
+        <div><img src="{{url_for('static', filename='user_data/' + user_avatar)}}" class="img-thumbnail"
+                                            align="left" width="50" height="50"/>
+
+                        </div>
+
+            {{ form1.hidden_tag() }}
+            {{ form1.submit_avatar(class="btn btn-secondary", type="submit") }}
+        </form>
+
+     <form action="" method="post" enctype="multipart/form-data" id="avatar_form">
+        <div><img src="{{url_for('static', filename='user_data/' + user_avatar)}}" class="img-thumbnail"
+                                            align="left" width="50" height="50"/>
+
+                        </div>
+
+            {{ form.hidden_tag() }}
+            {{ form.submit_avatar(class="btn btn-secondary", type="submit") }}
+        </form>
+
+</fieldset>
+
+
+{% endblock %}

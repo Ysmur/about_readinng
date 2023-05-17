@@ -7,31 +7,29 @@
 <!--<ol class="days-list" >-->
 
 <div class="days-list">
-    <section >
+    <section class="books_page_filter">
         <fieldset>
         <h3>Задания по книге:  <progress id="tasks" max="100" value="70"> 70% </progress></h3>
-        <legend><span style="background: #58a700;">{{ current_book.title }}</span></legend>
-
-
-
+        <legend><span style="background: #58a700">{{ current_book.title }}</span></legend>
 
                   {% set works= [('1', 'Выбери подходящую обложку'),
-                                 ('2', 'Загрузи свою обложку'),
-                                 ('3', 'Выбери лучшее описание сюжета'),
-                                 ('4', 'Создай свой вариант "Саммари" к книге'),
+                                 ('2', 'Составляем классный кроссворд'),
+                                 ('3', 'Выполни тест'),
+                                 ('4', 'Облако слов'),
                                  ('5', 'Нарисуй главного героя'),
                                  ('6', '5 фактов об авторе'),
                                  ('7', 'Расшифруй непонятное слово'),
                                  ('8', 'Аудио-фрагмент в твоем исполнении'),
-                                 ('9', 'Предложи свой вариант задания') ] %}
+                                 ('9', 'Разгадай кроссворд'),
+                                 ('10', 'Загрузи свою обложку')] %}
               <h6>
                   {% for item in works %}
                 <label>
                     {% if item[0] == work %}
-                    <input type="radio" name="works" value={{item}} checked>
+                    <input type="radio" name="tasks" value={{item}} checked>
                     {% else %}
-                    <input type="radio" name="works" value={{item}}
-                    onclick="go_to_href('book_base/student_base_{{item[0]}}_{{current_genre}}_{{current_class}}')">
+                    <input type="radio" name="tasks" value={{item}}
+                    onclick="go_to_href('student_book/t{{item[0]}}/{{current_book.id}}')">
                     {% endif %}
 
                     <nobr>{{item[1]}}</nobr>
@@ -44,12 +42,11 @@
     </section>
 </div>
 
-    <section class="books_page_ready">
-          <h3>Здесь будет само задание
+    <div class="task-list">
 
-          </h3>
-    </section>
+          {% block task %} {% endblock %}
 
+    </div>
 
 
 {% endblock %}

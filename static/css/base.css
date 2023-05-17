@@ -1,5 +1,5 @@
-/* {
-outline: solid #123456;}*/
+* {
+outline: solid #123456;}
 :root {
     --viewport-height: 100dvh;
     --web-ui_button-border-radius: 16px;
@@ -98,6 +98,8 @@ header {
 .form  {
     padding: 7%;
     margin-top: 7%;
+    margin-right: 8%;
+    margin-left: 1%;
     font-size: calc(1pem + 2vw);
     color: rgb(var(--color-black-text));
 
@@ -110,6 +112,8 @@ header {
 .form_student {
   margin-top: 2%;
   margin-left: 2%;
+  margin-right: 8%;
+    margin-left: 1%;
   width: calc(400px + (700 - 400) * ((100vw - 500px) / (1920 - 500)));
 }
 
@@ -136,6 +140,12 @@ header {
 . table_container {
   padding: 7%;
   margin-top: 7%;
+  margin-right: 8%;
+    margin-left: 1%;
+    display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   justify-content: space-evenly;
   width: calc(400px + (1200 - 400) * ((100vw - 500px) / (1920 - 500)));
   font-size: calc(1pem + 2vw);
 }
@@ -165,7 +175,9 @@ header {
 .days-list-many a{
     text-decoration: none;
     color: rgb(19,31,36);
-   }
+    }
+
+
 .days-list a :visited { text-decoration: none; }
 .days-list a:active { text-decoration: none; }
 .days-list a:hover {
@@ -195,14 +207,17 @@ header {
   grid-column-end: -1;
 }
 
-.books_page_filter {
-   grid-row-start: 1;
-   grid-row-end: 4;
+.books_page_filter label
+{
+   margin: 1%;
+
 }
 
 .books_page_ready {
- grid-column-start: 3;
-  grid-column-end: -1;
+outline: solid #f34567;
+margin-top: 7%;
+margin-right: 8%;
+    margin-left: 1%;
 }
 
 .books_page_task {
@@ -264,6 +279,17 @@ flex-direction: row;
 progress {
   accent-color: #58a700;
 }
+
+.task-list{
+    padding: 2%;
+    margin-top: 2%;
+    margin-right: 8%;
+    margin-left: 1%;
+
+
+    font-size: calc(16px + (32 - 16) * ((100vw - 500px) / (1920 - 500)));
+}
+
 
 
 

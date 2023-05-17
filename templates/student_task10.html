@@ -1,0 +1,21 @@
+{% extends "student_book.html" %}
+
+{% block task %}
+ <fieldset>
+<label> Загрузи свою обложку </label>
+<form action="" method="post" enctype="multipart/form-data" id="form">
+
+        <div><p><label>
+
+            <img src="{{url_for('static', filename='user_data/' + cover)}}" class="img-thumbnail"
+                                            align="left" width="50" height="50"/>
+
+
+                            <input type="file" id="photo" name="file" hidden>
+                        </label></p></div>
+
+            {{ form.hidden_tag() }}
+            {{ form.submit_avatar(class="btn btn-secondary", type="submit") }}
+        </form>
+
+{% endblock %}
